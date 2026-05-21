@@ -89,6 +89,10 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 ## Screenshots
 
+#### Panel indicator
+
+[<img src="sample.png" width="800">]()
+
 #### Popup menu
 
 [<img src="assets/images/popup.png" width="400">]()
