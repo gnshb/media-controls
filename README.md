@@ -1,3 +1,5 @@
+<img src="sample.png" width="800">
+
 ## What does this extension do?
 
 Show controls and information of the currently playing media in the panel.
@@ -88,10 +90,6 @@ If you are interested in contributing code. There are no specific guidelines for
 Made with [contrib.rocks](https://contrib.rocks).
 
 ## Screenshots
-
-#### Panel indicator
-
-[<img src="sample.png" width="800">]()
 
 #### Popup menu
 
