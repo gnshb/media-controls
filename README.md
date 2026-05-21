@@ -1,4 +1,7 @@
+# Added feature
 <img src="sample.png" width="800">
+
+---
 
 ## What does this extension do?
 
