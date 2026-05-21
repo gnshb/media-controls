@@ -98,3 +98,38 @@
 .popup-menu-control-icon:hover {
     background-color: rgba(160, 160, 160, 0.25);
 }
+
+.media-controls-song-osd {
+    background-color: rgba(28, 24, 38, 0.95);
+    border: 1px solid rgba(180, 160, 255, 0.18);
+    border-radius: 14px;
+    padding: 10px 14px;
+    spacing: 6px;
+}
+
+.media-controls-song-osd-prefix {
+    font-weight: bold;
+    font-size: 0.78em;
+    color: rgba(190, 175, 255, 0.95);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    padding-right: 6px;
+    border-right: 1px solid rgba(180, 160, 255, 0.25);
+}
+
+.media-controls-song-osd-textbox {
+    spacing: 1px;
+    padding-left: 4px;
+}
+
+.media-controls-song-osd-title {
+    font-weight: bold;
+    font-size: 1.0em;
+    color: rgba(200, 235, 215, 1.0);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.media-controls-song-osd-subtitle {
+    font-size: 0.88em;
+    color: rgba(245, 215, 195, 0.95);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}

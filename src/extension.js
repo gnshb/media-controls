@@ -12,6 +12,7 @@ import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 import PanelButton from "./helpers/shell/PanelButton.js";
 import PlayerProxy from "./helpers/shell/PlayerProxy.js";
+import SongOsd from "./helpers/shell/SongOsd.js";
 import { debugLog, enumValueByIndex, errorLog } from "./utils/common.js";
 import { getAppInfoByIdAndEntry, getAppByIdAndEntry, createDbusProxy } from "./utils/shell_only.js";
 import {
@@ -268,6 +269,7 @@ export default class MediaControls extends Extension {
         this.initSettings();
         this.initProxies().catch(errorLog);
         this.updateMediaNotificationVisiblity();
+        this.songOsd = new SongOsd();
         Main.wm.addKeybinding(
             "mediacontrols-show-popup-menu",
             this.settings,
@@ -294,6 +296,8 @@ export default class MediaControls extends Extension {
         this.watchProxy = null;
         this.removePanelButton();
         this.updateMediaNotificationVisiblity(true);
+        this.songOsd?.destroy();
+        this.songOsd = null;
         Main.wm.removeKeybinding("mediacontrols-show-popup-menu");
         debugLog("Disabled");
     }
