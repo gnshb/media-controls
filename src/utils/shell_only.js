@@ -90,9 +90,10 @@ export const getAppByIdAndEntry = (id, entry) => {
 
 /**
  * @param {string} url
+ * @param {boolean} cache
  * @returns {Promise<Gio.InputStream>}
  */
-export const getImage = async (url) => {
+export const getImage = async (url, cache = true) => {
     if (url == null || url == "") {
         return null;
     }
@@ -106,7 +107,7 @@ export const getImage = async (url) => {
         return null;
     }
     const file = Gio.File.new_for_path(path);
-    if (file.query_exists(null)) {
+    if (cache && file.query_exists(null)) {
         const stream = await file.read_async(null, null).catch(errorLog);
         if (stream == null) {
             errorLog(`Failed to load image from cache: ${encodedUrl}`);
@@ -137,6 +138,9 @@ export const getImage = async (url) => {
             if (bytes == null) {
                 errorLog(`Failed to load image: ${url}`);
                 return null;
+            }
+            if (cache === false) {
+                return Gio.MemoryInputStream.new_from_bytes(bytes);
             }
             // @ts-expect-error Types are wrong
             const resultPromise = file.replace_contents_bytes_async(bytes, null, false, Gio.FileCreateFlags.NONE, null);

@@ -484,7 +484,7 @@ class PanelButton extends PanelMenu.Button {
             });
         }
         let artSet = false;
-        let stream = await getImage(this.playerProxy.metadata["mpris:artUrl"]);
+        let stream = await getImage(this.playerProxy.metadata["mpris:artUrl"], this.extension.cacheArt);
         if (stream == null && this.playerProxy.metadata["xesam:url"] != null) {
             const trackUri = GLib.uri_parse(this.playerProxy.metadata["xesam:url"], GLib.UriFlags.NONE);
             if (trackUri != null && trackUri.get_scheme() === "file") {
@@ -503,7 +503,7 @@ class PanelButton extends PanelMenu.Button {
                         this.menuImage.gicon = info.get_icon();
                     } else {
                         const thumb = Gio.File.new_for_path(path);
-                        stream = await getImage(thumb.get_uri());
+                        stream = await getImage(thumb.get_uri(), this.extension.cacheArt);
                     }
                 }
             }
@@ -516,16 +516,22 @@ class PanelButton extends PanelMenu.Button {
             if (pixbuf != null) {
                 const aspectRatio = pixbuf.width / pixbuf.height;
                 const height = width / aspectRatio;
-                const [success, buffer] = pixbuf.save_to_bufferv("png", [], []);
-                if (success) {
-                    const bytes = GLib.Bytes.new(buffer);
-                    const icon = Gio.BytesIcon.new(bytes);
+                const image = new Clutter.Image();
+                const pixelFormat = pixbuf.has_alpha ? Cogl.PixelFormat.RGBA_8888 : Cogl.PixelFormat.RGB_888;
+                try {
+                    image.set_data(pixbuf.get_pixels(), pixelFormat, pixbuf.width, pixbuf.height, pixbuf.rowstride);
                     this.menuImage.content = null;
-                    this.menuImage.gicon = icon;
-                    this.menuImage.iconSize = width;
+                    this.menuImage.gicon = null;
+                    this.menuImage.content = image;
+                    this.menuImage.set_content_scaling_filters(
+                        Clutter.ScalingFilter.TRILINEAR,
+                        Clutter.ScalingFilter.LINEAR,
+                    );
                     this.menuImage.width = width;
                     this.menuImage.height = height;
                     artSet = true;
+                } catch (e) {
+                    errorLog(e);
                 }
             }
         }
